@@ -1,8 +1,15 @@
 <template>
   <ion-page>
-    <header-app :title="title" />
-    <ion-content>
-      <ion-title size="large">Géneros</ion-title>
+    <movies-menu/>
+    <ion-content id="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>{{ title }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-row>
         <genre-card v-for="genre in genres" :key="genre.id" :genre="genre"/>
       </ion-row>
@@ -11,19 +18,19 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonPage, IonTitle } from '@ionic/vue';
-import HeaderApp from '@/components/HeaderApp.vue';
+import { IonContent, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton } from '@ionic/vue';
+import MoviesMenu from '@/components/MoviesMenu.vue'
 import GenreCard from '@/components/GenreCard.vue';
 import MovieService from '@/services/MovieService';
 
 export default {
   name: 'HomePage',
   components: {
-    IonContent, IonPage, IonTitle, HeaderApp, GenreCard
+    IonContent, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton, GenreCard, MoviesMenu
   },
   data() {
     return {
-      title: 'Home',
+      title: 'Generos',
       genres: []
     };
   },
@@ -37,7 +44,7 @@ export default {
 <style scoped>
 ion-title {
   text-align: center;
-  margin: 16px 0;
+  margin: 0 40px 0 0;
 }
 ion-row {
   display: flex;
