@@ -10,7 +10,8 @@
           <ion-title>{{ title }}</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-row>
+      <ion-loading :is-open="loading" message="Loading..." :duration="4000" spinner="circles"></ion-loading>
+      <ion-row v-if="!loading">
         <genre-card v-for="genre in genres" :key="genre.id" :genre="genre"/>
       </ion-row>
     </ion-content>
@@ -18,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton } from '@ionic/vue';
+import { IonContent, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonLoading } from '@ionic/vue';
 import MoviesMenu from '@/components/MoviesMenu.vue'
 import GenreCard from '@/components/GenreCard.vue';
 import MovieService from '@/services/MovieService';
@@ -26,17 +27,25 @@ import MovieService from '@/services/MovieService';
 export default {
   name: 'HomePage',
   components: {
-    IonContent, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton, GenreCard, MoviesMenu
+    IonContent, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton, GenreCard, MoviesMenu, IonLoading
   },
   data() {
     return {
       title: 'Generos',
-      genres: []
+      genres: [],
+      loading: true
     };
   },
   async created() {
-    this.genres = await MovieService.getGenres();
-    console.log(this.genres);
+    await this.loadMoviesDetails();
+  },
+  methods: {
+    async loadMoviesDetails() {
+      this.loading = true;
+      this.genres = await MovieService.getGenres();
+      console.log(this.genres);
+      this.loading = false;
+    }
   }
 };
 </script>

@@ -1,9 +1,9 @@
-import axios from "axios"
+import axios from "axios";
 
-const BASE_URL = "https://api.themoviedb.org/3/"
-const BASE_IMG = "https://image.tmdb.org/t/p/w500/"
-const APIKEY = "492d218f089fd8c20e9c3a945b482a9f"
-const LANGUAGE = "es-CO"
+const BASE_URL = "https://api.themoviedb.org/3/";
+const BASE_IMG = "https://image.tmdb.org/t/p/w500/";
+const APIKEY = "492d218f089fd8c20e9c3a945b482a9f";
+const LANGUAGE = "es-CO";
 
 function formatReleaseDate(original_date:String) {
     let months = [
@@ -31,64 +31,62 @@ function formatReleaseDate(original_date:String) {
 }
 
 export default {
-
     async getGenres() {
         return await axios.get(`${BASE_URL}genre/movie/list?api_key=${APIKEY}&language=${LANGUAGE}`)
         .then(response => {
-            return response.data.genres
+            return response.data.genres;
         })
         .catch(error => {
-            console.log(error)
-        })
+            console.log(error);
+        });
     },
-    async getMoviesFilteredByGenre(genrer_id:any,page:any) {
-        return await axios.get(`${BASE_URL}discover/movie?api_key=${APIKEY}&language=${LANGUAGE}&with_genres=${genrer_id}&page=${page}`)
+    async getMoviesFilteredByGenre(genre_id:any, page:any) {
+        return await axios.get(`${BASE_URL}discover/movie?api_key=${APIKEY}&language=${LANGUAGE}&with_genres=${genre_id}&page=${page}`)
         .then(response => {
-            let movies = response.data.results
+            let movies = response.data.results;
             for(let i = 0; i < movies.length; i++){
-                movies[i].release_date = formatReleaseDate(movies[i].release_date)
+                movies[i].release_date = formatReleaseDate(movies[i].release_date);
+                movies[i].imageUrl = `${BASE_IMG}${movies[i].poster_path}`;
             }
-            return movies
+            return movies;
         })
         .catch(error => {
-            console.log(error)
-        })
+            console.log(error);
+        });
     },
-    async getMoviesFilteredByCategory(category:any,page:any){
+    async getMoviesFilteredByCategory(category:any, page:any) {
         return await axios.get(`${BASE_URL}movie/${category}?api_key=${APIKEY}&language=${LANGUAGE}&page=${page}`)
         .then(response => {
-            let movies = response.data.results
+            let movies = response.data.results;
             for(let i = 0; i < movies.length; i++){
-                movies[i].release_date = formatReleaseDate(movies[i].release_date)
+                movies[i].release_date = formatReleaseDate(movies[i].release_date);
+                movies[i].imageUrl = `${BASE_IMG}${movies[i].poster_path}`;
             }
-            return movies
+            return movies;
         })
         .catch(error => {
-            console.log(error)
-        })
+            console.log(error);
+        });
     },
     async getMovieDetail(id:any) {
         return await axios.get(`${BASE_URL}movie/${id}?api_key=${APIKEY}&language=${LANGUAGE}`)
         .then(response => {
-            let movie = response.data
-            movie.release_date = formatReleaseDate(movie.release_date)
-            return movie
+            let movie = response.data;
+            movie.release_date = formatReleaseDate(movie.release_date);
+            movie.imageUrl = `${BASE_IMG}${movie.poster_path}`;
+            return movie;
         })
         .catch(error => {
-            console.log(error)
-        })
+            console.log(error);
+        });
     },
     async getMovieTrailer(id:any) {
         return await axios.get(`${BASE_URL}movie/${id}/videos?api_key=${APIKEY}&language=${LANGUAGE}`)
         .then(response => {
-            return response.data.results
+            return response.data.results;
         })
         .catch(error => {
-            console.log(error)
-        })
-    },
-
-    baseImgUrl : () => {
-        return BASE_IMG
+            console.log(error);
+        });
     }
 }
