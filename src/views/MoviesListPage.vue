@@ -9,7 +9,7 @@
                     <ion-title>{{ title }}</ion-title>
                 </ion-toolbar>
             </ion-header>
-            <ion-loading :is-open="loading" message="Loading..." :duration="4000" spinner="circles"></ion-loading>
+            <ion-loading :is-open="loading" message="Loading..." :duration="1000" spinner="circles"></ion-loading>
             <div v-if="!loading">
                 <ion-grid>
                     <ion-row>

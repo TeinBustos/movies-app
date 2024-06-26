@@ -10,7 +10,7 @@
           <ion-title>{{ title }}</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-loading :is-open="loading" message="Loading..." :duration="4000" spinner="circles"></ion-loading>
+      <ion-loading :is-open="loading" message="Loading..." :duration="1000" spinner="circles"></ion-loading>
       <ion-row v-if="!loading">
         <genre-card v-for="genre in genres" :key="genre.id" :genre="genre"/>
       </ion-row>

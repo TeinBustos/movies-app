@@ -1,6 +1,6 @@
 <template>
     <ion-col size="12" size-md="6" size-lg="4">
-        <ion-card :href="`/detail/${movie.id}`">
+        <ion-card :href="`/movie/details/${movie.id}`">
             <ion-img :src="movie.imageUrl" />
             <ion-card-content>
                 <ion-card-title>{{ movie.title }}</ion-card-title>
